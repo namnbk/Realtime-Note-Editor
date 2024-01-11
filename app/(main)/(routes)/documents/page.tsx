@@ -7,6 +7,7 @@ import { PlusCircle } from "lucide-react";
 import Image from "next/image";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
+import { initDocName, onCreateNoti } from "../../_components/constants";
 
 const DocumentsPage = () => {
   // Hooks
@@ -15,12 +16,8 @@ const DocumentsPage = () => {
   const get = useQuery(api.documents.get);
   // Function
   const onCreate = () => {
-    const promise = create({ title: "Everyday comes with a miracle" });
-    toast.promise(promise, {
-      loading: "Create a new note ...",
-      success: "New note created!",
-      error: "Failed to create a new note",
-    });
+    const promise = create({ title: initDocName });
+    toast.promise(promise, onCreateNoti);
   };
   return (
     <div className="h-full flex flex-col items-center justify-center space-y-4">
