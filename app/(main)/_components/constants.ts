@@ -9,3 +9,13 @@ export const onDelNoti = {
   success: "Note moved to trash!",
   error: "Failed to archive note.",
 };
+export const onRestoreNoti = {
+  loading: "Restoring note ...",
+  success: "Note restored!",
+  error: "Failed to restore note.",
+};
+export const onHardDelNoti = {
+  loading: "Deleting note ...",
+  success: "Note delted!",
+  error: "Failed to delete note.",
+};

@@ -64,7 +64,7 @@ export const DocumentList = ({
         className={cn(
           "hidden text-sm font-medium text-muted-foreground/80",
           expanded && "last:block",
-          level === 0 && "last:hidden",
+          level === 0 && "hidden",
         )}
       >
         No pages inside
