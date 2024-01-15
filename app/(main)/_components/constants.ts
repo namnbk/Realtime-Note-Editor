@@ -1,4 +1,4 @@
-export const initDocName = "Everyday comes with a miracle";
+export const initDocName = "je t'aime";
 export const onCreateNoti =  {
   loading: "Create a new note ...",
   success: "New note created!",

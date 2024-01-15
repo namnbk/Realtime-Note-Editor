@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import {
   ChevronsLeft,
   MenuIcon,
@@ -17,12 +17,12 @@ import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { toast } from "sonner";
 import { initDocName, onCreateNoti } from "./constants";
+import { DocumentList } from "./document-list";
 
 const Navigation = () => {
   // Hooks
   const isMobile = useMediaQuery("(max-width: 768px)");
   const pathName = usePathname();
-  const documents = useQuery(api.documents.get);
   const create = useMutation(api.documents.create);
 
   const isResizingRef = useRef(false);
@@ -47,7 +47,7 @@ const Navigation = () => {
 
   // Functions
   const handleMouseDown = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     // default handling
     event.preventDefault();
@@ -95,7 +95,7 @@ const Navigation = () => {
       navbarRef.current.style.setProperty("left", isMobile ? "100%" : "240px");
       navbarRef.current.style.setProperty(
         "width",
-        isMobile ? "0" : "calc(100% - 240px)"
+        isMobile ? "0" : "calc(100% - 240px)",
       );
       // reset state
       setTimeout(() => setIsResetting(false), 300);
@@ -128,7 +128,7 @@ const Navigation = () => {
         className={cn(
           "group/sidebar h-full bg-secondary overflow-y-auto relative flex flex-col w-60 z-[99999]",
           isResetting && "transition-all ease-in-out duration-300",
-          isMobile && "w-0"
+          isMobile && "w-0",
         )}
       >
         <div
@@ -136,7 +136,7 @@ const Navigation = () => {
           onClick={collapse}
           className={cn(
             "h-6 w-6 text-muted-foreground rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition",
-            isMobile && "opacity-100"
+            isMobile && "opacity-100",
           )}
         >
           <ChevronsLeft className="h-6 w-6" />
@@ -148,9 +148,7 @@ const Navigation = () => {
           <Item onClick={handleCreate} label="New page" icon={PlusCircle} />
         </div>
         <div className="mt-4">
-          {documents?.map((document) => (
-            <p key={document._id}>{document.title}</p>
-          ))}
+          <DocumentList />
         </div>
         <div
           onMouseDown={handleMouseDown}
@@ -163,7 +161,7 @@ const Navigation = () => {
         className={cn(
           "absolute top-0 z-[99999] left-60 w-[calc(100%-240px)]",
           isResetting && "transition-all ease-in-out duration-300",
-          isMobile && "left-0 w-full"
+          isMobile && "left-0 w-full",
         )}
       >
         <nav className="bg-transparent px-3 py-2 w-full">
