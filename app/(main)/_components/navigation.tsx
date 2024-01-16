@@ -27,9 +27,11 @@ import {
 } from "@/components/ui/popover";
 import { TrashBox } from "./trash-box";
 import { useSearch } from "@/hooks/use-search";
+import { useSettings } from "@/hooks/use-settings";
 
 const Navigation = () => {
   // Hooks
+  const settings = useSettings();
   const search = useSearch();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const pathName = usePathname();
@@ -154,7 +156,7 @@ const Navigation = () => {
         <div>
           <UserItem />
           <Item label="Search" icon={Search} isSearch onClick={search.onOpen} />
-          <Item label="Setting" icon={Settings} onClick={() => {}} />
+          <Item label="Setting" icon={Settings} onClick={settings.onOpen} />
           <Item onClick={handleCreate} label="New page" icon={PlusCircle} />
         </div>
         <div className="mt-4">
