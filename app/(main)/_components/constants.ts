@@ -16,6 +16,6 @@ export const onRestoreNoti = {
 };
 export const onHardDelNoti = {
   loading: "Deleting note ...",
-  success: "Note delted!",
+  success: "Note deleted!",
   error: "Failed to delete note.",
 };
