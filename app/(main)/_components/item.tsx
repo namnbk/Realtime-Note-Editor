@@ -62,6 +62,7 @@ export const Item = ({
     if (!id) return;
     const promise = archive({ id });
     toast.promise(promise, onDelNoti);
+    router.push("/documents");
   };
 
   const handleExpand = (

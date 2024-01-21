@@ -25,7 +25,7 @@ export const Title = ({ initialData }: TitleProps) => {
     setTitle(initialData.title);
     setIsEditing(true);
     setTimeout(() => {
-      inputRef.current?.focus();
+      // inputRef.current?.focus();
       inputRef.current?.setSelectionRange(0, inputRef.current.value.length);
     }, 0);
   };
@@ -69,7 +69,7 @@ export const Title = ({ initialData }: TitleProps) => {
           size="sm"
           className="font-normal h-auto p-1"
         >
-          <span className="truncate">{title}</span>
+          <span className="truncate">{initialData?.title}</span>
         </Button>
       )}
     </div>
