@@ -11,6 +11,7 @@ import { api } from "@/convex/_generated/api";
 import { initDocName } from "@/app/(main)/_components/constants";
 import TextareaAutosize from "react-textarea-autosize";
 import { removeIcon } from "@/convex/documents";
+import { useCoverImage } from "@/hooks/use-cover-image";
 
 interface ToolbarProps {
   initialData: Doc<"documents">;
@@ -19,12 +20,13 @@ interface ToolbarProps {
 
 export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
   // Hooks
+  const update = useMutation(api.documents.update);
+  const removeIcon = useMutation(api.documents.removeIcon);
+
   const inputRef = useRef<ElementRef<"textarea">>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialData.title);
-
-  const update = useMutation(api.documents.update);
-  const removeIcon = useMutation(api.documents.removeIcon);
+  const coverImage = useCoverImage();
 
   // Function
   const enableInput = () => {
@@ -72,7 +74,7 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
   return (
     <div className="pl-[54px] group relative">
       {!!initialData.icon && !preview && (
-        <div className="flex items-center gap-x-2 group/icon">
+        <div className="flex items-center gap-x-2 group/icon pt-6">
           <IconPicker onChange={onIconSelect}>
             <p className="text-6xl hover:opacity-75 transition">
               {initialData.icon}
@@ -109,7 +111,7 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
             className="text-muted-foreground text-xs"
             variant="outline"
             size="sm"
-            onClick={() => {}}
+            onClick={coverImage.onOpen}
           >
             <ImageIcon className="h-4 w-4 mr-2" />
             Add cover
