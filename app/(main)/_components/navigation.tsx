@@ -11,7 +11,7 @@ import {
   Settings,
   Trash,
 } from "lucide-react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import UserItem from "./user-item";
@@ -32,6 +32,7 @@ import { Navbar } from "./navbar";
 
 const Navigation = () => {
   // Hooks
+  const router = useRouter();
   const settings = useSettings();
   const search = useSearch();
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -130,11 +131,14 @@ const Navigation = () => {
 
   const handleCreate = () => {
     // Create new document
-    const promise = create({ title: initDocName });
+    const promise = create({ title: initDocName }).then((documentId) => {
+      router.push(`/documents/${documentId}`);
+    });
     // Noti
     toast.promise(promise, onCreateNoti);
   };
 
+  // Rendering
   return (
     <>
       <aside

@@ -24,18 +24,17 @@ export const DocumentList = ({
   const router = useRouter();
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
-  // Functions
+  const documents = useQuery(api.documents.getSideBar, {
+    parentDocument: parentDocumentId,
+  });
 
+  // Functions
   const onExpand = (documentId: string) => {
     setExpanded((prevExpanded) => ({
       ...prevExpanded,
       [documentId]: !prevExpanded[documentId],
     }));
   };
-
-  const documents = useQuery(api.documents.getSideBar, {
-    parentDocument: parentDocumentId,
-  });
 
   const onRedirect = (documentId: string) => {
     router.push(`/documents/${documentId}`);

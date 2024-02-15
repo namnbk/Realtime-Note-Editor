@@ -8,17 +8,23 @@ import Image from "next/image";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { initDocName, onCreateNoti } from "../../_components/constants";
+import { useRouter } from "next/navigation";
 
 const DocumentsPage = () => {
   // Hooks
+  const router = useRouter();
   const { user } = useUser();
   const create = useMutation(api.documents.create);
-  const get = useQuery(api.documents.get);
+
   // Function
   const onCreate = () => {
-    const promise = create({ title: initDocName });
+    const promise = create({ title: initDocName }).then((documentId) =>
+      router.push(`/documents/${documentId}`),
+    );
     toast.promise(promise, onCreateNoti);
   };
+
+  // Rendering
   return (
     <div className="h-full flex flex-col items-center justify-center space-y-4">
       <Image
