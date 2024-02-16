@@ -19,3 +19,13 @@ export const onHardDelNoti = {
   success: "Note deleted!",
   error: "Failed to delete note.",
 };
+export const onPublishNoti = {
+  loading: "Publishing...",
+  success: "Note Published",
+  error: "Failed to publish note.",
+};
+export const onUnpublishNoti = {
+  loading: "Unpublishing...",
+  success: "Note unpublished",
+  error: "Failed to unpublish note.",
+};
