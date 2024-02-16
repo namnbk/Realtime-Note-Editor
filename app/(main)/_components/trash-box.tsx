@@ -11,16 +11,20 @@ import { Spinner } from "@/components/spinner";
 import { Search, Trash, Undo } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { ConfirmModal } from "../../../components/modals/confirm-modal";
+import { useCoverImageRemove } from "@/hooks/use-cover-image-remove";
 
 export const TrashBox = () => {
   // Hooks
   const router = useRouter();
   const params = useParams();
+
+  const { handleCoverImageRemove } = useCoverImageRemove();
+
   const restore = useMutation(api.documents.restore);
   const remove = useMutation(api.documents.remove);
+  const documents = useQuery(api.documents.getTrash);
   // state
   const [search, setSearch] = useState("");
-  const documents = useQuery(api.documents.getTrash);
   const filteredDocuments = documents?.filter((document) => {
     return document.title.toLowerCase().includes(search.toLowerCase());
   });
@@ -39,9 +43,19 @@ export const TrashBox = () => {
     toast.promise(promise, onRestoreNoti);
   };
 
-  const onRemove = (documentId: Id<"documents">) => {
-    const promise = remove({ id: documentId });
-    toast.promise(promise, onHardDelNoti);
+  const onRemove = (
+    documentId: Id<"documents">,
+    documentCoverImgUrl: string | undefined,
+  ) => {
+    // Function
+    const totalRemove = (async () => {
+      // remove cover image from bucket store
+      await handleCoverImageRemove(documentCoverImgUrl);
+      // remove document from database
+      await remove({ id: documentId });
+    })();
+    // Noti
+    toast.promise(totalRemove, onHardDelNoti);
 
     if (params.documentId === documentId) {
       router.push("/documents");
@@ -89,7 +103,9 @@ export const TrashBox = () => {
               >
                 <Undo className="h-4 w-4 text-muted-foreground" />
               </div>
-              <ConfirmModal onConfirm={() => onRemove(document._id)}>
+              <ConfirmModal
+                onConfirm={() => onRemove(document._id, document.coverImage)}
+              >
                 <div
                   role="button"
                   className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"

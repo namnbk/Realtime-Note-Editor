@@ -8,22 +8,33 @@ import { toast } from "sonner";
 import { onDelNoti, onHardDelNoti, onRestoreNoti } from "./constants";
 import { Button } from "@/components/ui/button";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
+import { useCoverImageRemove } from "@/hooks/use-cover-image-remove";
+import { url } from "inspector";
 
 interface BannerProps {
   documentId: Id<"documents">;
+  coverImageUrl: string | undefined;
 }
 
-export const Banner = ({ documentId }: BannerProps) => {
+export const Banner = ({ documentId, coverImageUrl }: BannerProps) => {
   // Hooks
   const router = useRouter();
   const remove = useMutation(api.documents.remove);
   const restore = useMutation(api.documents.restore);
 
+  const { handleCoverImageRemove } = useCoverImageRemove();
+
   // Function
   const onRemove = () => {
-    // Remove
-    const promise = remove({ id: documentId });
-    toast.promise(promise, onHardDelNoti);
+    // Function
+    const totalRemove = (async () => {
+      // remove cover image from bucket store
+      await handleCoverImageRemove(coverImageUrl);
+      // remove document from database
+      await remove({ id: documentId });
+    })();
+    // Noti
+    toast.promise(totalRemove, onHardDelNoti);
     // After remove
     router.push("/documents");
   };
