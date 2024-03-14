@@ -1,4 +1,4 @@
-# Fullstack Notion Clone: Next.js 13, React, Tailwind, Shadcd UI, Convex
+# Fullstack Notion-like Notetaking Application: Next.js 13, React, Tailwind, Shadcd UI, Convex
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -21,6 +21,10 @@ Key Features:
 - Landing page 🛬
 - Cover image of each document 🖼️
 - Recover deleted files 🔄📄
+
+Upcoming Features:
+- Katex (Latex-related) editor integration
+- Connection to previous lessons
 
 ## Getting Started
 
