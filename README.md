@@ -25,6 +25,7 @@ Key Features:
 Upcoming Features:
 - Katex (Latex-related) editor integration
 - Connection to previous lessons
+- Multi-user on the same note
 
 ## Getting Started
 
